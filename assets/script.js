@@ -1,3 +1,55 @@
+// パスワード保護設定
+const SITE_PASSWORD = 'okinawa2024'; // ここでパスワードを変更できます
+
+// パスワード保護機能
+(function() {
+    // セッションストレージで認証状態を確認
+    const isAuthenticated = sessionStorage.getItem('siteAuthenticated') === 'true';
+    
+    if (!isAuthenticated) {
+        // 認証されていない場合、パスワードモーダルを表示
+        document.body.style.overflow = 'hidden';
+        const modal = document.getElementById('passwordModal');
+        if (modal) {
+            modal.style.display = 'flex';
+            
+            // パスワード入力フォームの処理
+            const passwordForm = document.getElementById('passwordForm');
+            const passwordInput = document.getElementById('passwordInput');
+            const passwordError = document.getElementById('passwordError');
+            
+            passwordForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const enteredPassword = passwordInput.value;
+                
+                if (enteredPassword === SITE_PASSWORD) {
+                    // パスワードが正しい場合
+                    sessionStorage.setItem('siteAuthenticated', 'true');
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                    
+                    // サイトコンテンツを表示
+                    document.body.style.opacity = '1';
+                } else {
+                    // パスワードが間違っている場合
+                    passwordError.textContent = 'パスワードが正しくありません。';
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            });
+            
+            // 入力フィールドにフォーカス
+            passwordInput.focus();
+        }
+    } else {
+        // 既に認証されている場合、モーダルを非表示
+        const modal = document.getElementById('passwordModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+})();
+
 // スムーズスクロール
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {

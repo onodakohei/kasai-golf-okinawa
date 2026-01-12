@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
+    <!-- パスワード保護モーダル -->
+    <div id="passwordModal" class="password-modal">
+        <div class="password-modal-content">
+            <h2>アクセス制限</h2>
+            <p>このページは限定公開されています。パスワードを入力してください。</p>
+            <form id="passwordForm">
+                <input type="password" id="passwordInput" placeholder="パスワードを入力" autocomplete="off" required>
+                <p id="passwordError" class="password-error"></p>
+                <button type="submit" class="btn-password">アクセス</button>
+            </form>
+        </div>
+    </div>
+
     <!-- ヘッダー -->
     <header class="header">
         <div class="header-top">
